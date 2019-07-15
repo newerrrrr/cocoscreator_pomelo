@@ -1,0 +1,38 @@
+{
+  "assets-sort-type": "name",
+  "collision-matrix": [
+    [
+      true
+    ]
+  ],
+  "design-resolution-height": 750,
+  "design-resolution-width": 1334,
+  "excluded-modules": [
+    "TiledMap",
+    "VideoPlayer"
+  ],
+  "facebook": {
+    "appID": "",
+    "audience": {
+      "enable": false
+    },
+    "enable": false,
+    "live": {
+      "enable": false
+    }
+  },
+  "fit-height": true,
+  "fit-width": true,
+  "group-list": [
+    "default"
+  ],
+  "last-module-event-record-time": 1563024329110,
+  "simulator-orientation": false,
+  "simulator-resolution": {
+    "height": 540,
+    "width": 960
+  },
+  "start-scene": "3e6bac80-a251-4dab-95fc-70704381151c",
+  "use-customize-simulator": true,
+  "use-project-simulator-setting": false
+}
