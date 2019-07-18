@@ -1,0 +1,80 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "loading",
+  "_duration": 1,
+  "wrapMode": "2",
+  "curveData": {
+    "paths": {
+      "Img_1": {
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                0,
+                0
+              ]
+            },
+            {
+              "frame": 0.5,
+              "value": [
+                0,
+                2
+              ]
+            },
+            {
+              "frame": 1,
+              "value": [
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      },
+      "Img_2": {
+        "props": {
+          "rotation": [
+            {
+              "frame": 0,
+              "value": -360
+            },
+            {
+              "frame": 0.5,
+              "value": 185
+            },
+            {
+              "frame": 1,
+              "value": 360
+            }
+          ]
+        }
+      },
+      "Img_3": {
+        "props": {
+          "rotation": [
+            {
+              "frame": 0,
+              "value": 0
+            },
+            {
+              "frame": 0.5,
+              "value": -185
+            },
+            {
+              "frame": 1,
+              "value": -360
+            }
+          ]
+        }
+      }
+    }
+  },
+  "events": [
+    {
+      "frame": 0,
+      "func": "",
+      "params": []
+    }
+  ]
+}

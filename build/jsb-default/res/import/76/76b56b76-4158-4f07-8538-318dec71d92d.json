@@ -1,0 +1,578 @@
+[
+  {
+    "__type__": "cc.SceneAsset",
+    "_name": "LoginScene",
+    "scene": {
+      "__id__": 1
+    },
+    "asyncLoadAssets": null
+  },
+  {
+    "__type__": "cc.Scene",
+    "_name": "New Node",
+    "_children": [
+      {
+        "__id__": 2
+      }
+    ],
+    "_anchorPoint": {
+      "__type__": "cc.Vec2"
+    },
+    "_scale": {
+      "__type__": "cc.Vec3",
+      "x": 0.3079587524596397,
+      "y": 0.3079587524596397,
+      "z": 1
+    },
+    "autoReleaseAssets": false
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Canvas",
+    "_parent": {
+      "__id__": 1
+    },
+    "_children": [
+      {
+        "__id__": 3
+      },
+      {
+        "__id__": 4
+      }
+    ],
+    "_components": [
+      {
+        "__type__": "cc.Canvas",
+        "node": {
+          "__id__": 2
+        },
+        "_designResolution": {
+          "__type__": "cc.Size",
+          "width": 1334,
+          "height": 750
+        },
+        "_fitWidth": true
+      },
+      {
+        "__type__": "10622vpCXRIOpdjNT+kFHai",
+        "node": {
+          "__id__": 2
+        }
+      }
+    ],
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 1334,
+      "height": 750
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": 667,
+      "y": 375
+    },
+    "_id": "8d7LeZfd1GH5JGI0DYcd8I"
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Main Camera",
+    "_parent": {
+      "__id__": 2
+    },
+    "_level": 1,
+    "_components": [
+      {
+        "__type__": "cc.Camera",
+        "node": {
+          "__id__": 3
+        },
+        "_clearFlags": 7,
+        "_depth": -1
+      }
+    ]
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "node_root",
+    "_parent": {
+      "__id__": 2
+    },
+    "_children": [
+      {
+        "__id__": 5
+      },
+      {
+        "__id__": 6
+      },
+      {
+        "__id__": 7
+      },
+      {
+        "__id__": 8
+      },
+      {
+        "__id__": 9
+      }
+    ],
+    "_level": 1,
+    "_components": [
+      {
+        "__type__": "cc.Widget",
+        "node": {
+          "__id__": 4
+        },
+        "_alignFlags": 45,
+        "_originalWidth": 1334,
+        "_originalHeight": 750
+      },
+      {
+        "__type__": "cc.AudioSource",
+        "node": {
+          "__id__": 4
+        }
+      }
+    ],
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 1334,
+      "height": 750
+    }
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Sp_bg",
+    "_parent": {
+      "__id__": 4
+    },
+    "_level": 2,
+    "_components": [
+      {
+        "__type__": "cc.Sprite",
+        "node": {
+          "__id__": 5
+        },
+        "_spriteFrame": {
+          "__uuid__": "69ifiLUOZLrrDJt3TaGVoO"
+        },
+        "_sizeMode": 0
+      }
+    ],
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 1620,
+      "height": 750
+    }
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Btn_wx",
+    "_parent": {
+      "__id__": 4
+    },
+    "_level": 2,
+    "_components": [
+      {
+        "__type__": "cc.Sprite",
+        "node": {
+          "__id__": 6
+        },
+        "_spriteFrame": {
+          "__uuid__": "b3KD10SilIkbs/OpjZcukr"
+        },
+        "_type": 1,
+        "_sizeMode": 0
+      },
+      {
+        "__type__": "cc.Button",
+        "node": {
+          "__id__": 6
+        },
+        "zoomScale": 1.1,
+        "clickEvents": [
+          {
+            "__type__": "cc.ClickEvent",
+            "target": {
+              "__id__": 2
+            },
+            "component": "LoginScene",
+            "handler": "onBtnLoginWX"
+          }
+        ],
+        "_N$enableAutoGrayEffect": true,
+        "_N$transition": 3,
+        "transition": 3,
+        "_N$normalColor": {
+          "__type__": "cc.Color",
+          "r": 255,
+          "g": 255,
+          "b": 255
+        },
+        "_N$pressedColor": {
+          "__type__": "cc.Color",
+          "r": 255,
+          "g": 255,
+          "b": 255
+        },
+        "pressedColor": {
+          "__type__": "cc.Color",
+          "r": 255,
+          "g": 255,
+          "b": 255
+        },
+        "_N$disabledColor": {
+          "__type__": "cc.Color",
+          "r": 255,
+          "g": 255,
+          "b": 255
+        },
+        "_N$normalSprite": {
+          "__uuid__": "b3KD10SilIkbs/OpjZcukr"
+        },
+        "_N$target": {
+          "__id__": 6
+        }
+      }
+    ],
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 306,
+      "height": 87
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "y": 86
+    }
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Btn_tel",
+    "_parent": {
+      "__id__": 4
+    },
+    "_level": 2,
+    "_components": [
+      {
+        "__type__": "cc.Sprite",
+        "node": {
+          "__id__": 7
+        },
+        "_spriteFrame": {
+          "__uuid__": "49XQ599N1CUrhRLpSub9hx"
+        },
+        "_type": 1,
+        "_sizeMode": 0
+      },
+      {
+        "__type__": "cc.Button",
+        "node": {
+          "__id__": 7
+        },
+        "zoomScale": 1.1,
+        "clickEvents": [
+          {
+            "__type__": "cc.ClickEvent",
+            "target": {
+              "__id__": 2
+            },
+            "component": "LoginScene",
+            "handler": "onBtnLoginTel"
+          }
+        ],
+        "_N$enableAutoGrayEffect": true,
+        "_N$transition": 3,
+        "transition": 3,
+        "_N$normalColor": {
+          "__type__": "cc.Color",
+          "r": 255,
+          "g": 255,
+          "b": 255
+        },
+        "_N$pressedColor": {
+          "__type__": "cc.Color",
+          "r": 255,
+          "g": 255,
+          "b": 255
+        },
+        "pressedColor": {
+          "__type__": "cc.Color",
+          "r": 255,
+          "g": 255,
+          "b": 255
+        },
+        "_N$disabledColor": {
+          "__type__": "cc.Color",
+          "r": 255,
+          "g": 255,
+          "b": 255
+        },
+        "_N$normalSprite": {
+          "__uuid__": "b3KD10SilIkbs/OpjZcukr"
+        },
+        "_N$target": {
+          "__id__": 7
+        }
+      }
+    ],
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 306,
+      "height": 87
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "y": -72
+    }
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Btn_guest",
+    "_parent": {
+      "__id__": 4
+    },
+    "_level": 2,
+    "_components": [
+      {
+        "__type__": "cc.Sprite",
+        "node": {
+          "__id__": 8
+        },
+        "_spriteFrame": {
+          "__uuid__": "edi5HLLHpIB7aqyznE1Z90"
+        },
+        "_type": 1,
+        "_sizeMode": 0
+      },
+      {
+        "__type__": "cc.Button",
+        "node": {
+          "__id__": 8
+        },
+        "zoomScale": 1.1,
+        "clickEvents": [
+          {
+            "__type__": "cc.ClickEvent",
+            "target": {
+              "__id__": 2
+            },
+            "component": "LoginScene",
+            "handler": "onBtnLoginGuest"
+          }
+        ],
+        "_N$enableAutoGrayEffect": true,
+        "_N$transition": 3,
+        "transition": 3,
+        "_N$normalColor": {
+          "__type__": "cc.Color",
+          "r": 255,
+          "g": 255,
+          "b": 255
+        },
+        "_N$pressedColor": {
+          "__type__": "cc.Color",
+          "r": 255,
+          "g": 255,
+          "b": 255
+        },
+        "pressedColor": {
+          "__type__": "cc.Color",
+          "r": 255,
+          "g": 255,
+          "b": 255
+        },
+        "_N$disabledColor": {
+          "__type__": "cc.Color",
+          "r": 255,
+          "g": 255,
+          "b": 255
+        },
+        "_N$normalSprite": {
+          "__uuid__": "b3KD10SilIkbs/OpjZcukr"
+        },
+        "_N$target": {
+          "__id__": 8
+        }
+      }
+    ],
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 272,
+      "height": 91
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "y": -227
+    }
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Input_name",
+    "_parent": {
+      "__id__": 4
+    },
+    "_children": [
+      {
+        "__id__": 10
+      },
+      {
+        "__id__": 11
+      },
+      {
+        "__id__": 12
+      }
+    ],
+    "_level": 2,
+    "_components": [
+      {
+        "__type__": "cc.EditBox",
+        "node": {
+          "__id__": 9
+        },
+        "_useOriginalSize": false,
+        "_N$backgroundImage": {
+          "__uuid__": "980+xke3ZMlYmfFAADhCzG"
+        },
+        "_N$inputMode": 6,
+        "_N$fontSize": 28,
+        "_N$placeholder": "请时输入用户名",
+        "_N$placeholderFontSize": 28,
+        "_N$placeholderFontColor": {
+          "__type__": "cc.Color",
+          "r": 187,
+          "g": 187,
+          "b": 187
+        },
+        "_N$maxLength": 8
+      }
+    ],
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 248,
+      "g": 255,
+      "b": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 240,
+      "height": 60
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": -297.6,
+      "y": -227
+    }
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "BACKGROUND_SPRITE",
+    "_parent": {
+      "__id__": 9
+    },
+    "_level": 2,
+    "_components": [
+      {
+        "__type__": "cc.Sprite",
+        "node": {
+          "__id__": 10
+        },
+        "_spriteFrame": {
+          "__uuid__": "980+xke3ZMlYmfFAADhCzG"
+        },
+        "_type": 1,
+        "_sizeMode": 0,
+        "_isTrimmedMode": false
+      }
+    ],
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 240,
+      "height": 60
+    }
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "TEXT_LABEL",
+    "_parent": {
+      "__id__": 9
+    },
+    "_active": false,
+    "_level": 2,
+    "_components": [
+      {
+        "__type__": "cc.Label",
+        "node": {
+          "__id__": 11
+        },
+        "_fontSize": 28,
+        "_enableWrapText": false,
+        "_N$file": {
+          "__uuid__": "3dcWg8kcpAV4O6KNVL3XfT"
+        },
+        "_isSystemFontUsed": false,
+        "_N$horizontalAlign": 1,
+        "_N$verticalAlign": 1,
+        "_N$overflow": 1
+      }
+    ],
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 238,
+      "height": 60
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "y": 1
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": -118,
+      "y": 30
+    }
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "PLACEHOLDER_LABEL",
+    "_parent": {
+      "__id__": 9
+    },
+    "_level": 2,
+    "_components": [
+      {
+        "__type__": "cc.Label",
+        "node": {
+          "__id__": 12
+        },
+        "_string": "请时输入用户名",
+        "_N$string": "请时输入用户名",
+        "_fontSize": 28,
+        "_lineHeight": 60,
+        "_enableWrapText": false,
+        "_N$file": {
+          "__uuid__": "3dcWg8kcpAV4O6KNVL3XfT"
+        },
+        "_isSystemFontUsed": false,
+        "_N$horizontalAlign": 1,
+        "_N$verticalAlign": 1,
+        "_N$overflow": 1
+      }
+    ],
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 187,
+      "g": 187,
+      "b": 187
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 238,
+      "height": 60
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "y": 1
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": -118,
+      "y": 30
+    }
+  }
+]
