@@ -7,10 +7,7 @@
   ],
   "design-resolution-height": 750,
   "design-resolution-width": 1334,
-  "excluded-modules": [
-    "TiledMap",
-    "VideoPlayer"
-  ],
+  "excluded-modules": [],
   "facebook": {
     "appID": "",
     "audience": {
