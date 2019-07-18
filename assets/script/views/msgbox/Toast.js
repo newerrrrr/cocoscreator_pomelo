@@ -1,6 +1,6 @@
 
 //上浮文字
-//使用举例: require('views/msgbox/Toast').show('ddddddddddddddddd', cc.v2(100, 0)) 
+//使用举例: require('Toast').show('ddddddddddddddddd', cc.v2(100, 0)) 
 
 var Toast = {
 	show: function(tipsText, posOffset) {

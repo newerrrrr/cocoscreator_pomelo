@@ -27,7 +27,6 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        _loadTimerId:null,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -39,6 +38,8 @@ cc.Class({
     },
 
     start () {
+        cc.log('-----------------loading...');
+
         require('InitGame');
         
         //加载资源 
@@ -55,18 +56,11 @@ cc.Class({
             count -= 1;
             if (count <= 0) this.showLogin();
         }.bind(this));
-
-        //超时则暂定加载并进入登录界面
-        // this._loadTimerId = setTimeout(this.showLogin.bind(this), 6000);
     },
 
     // update (dt) {},
 
     showLogin:function(){ 
-        // if (this._loadTimerId) {
-        //     clearTimeout(this._loadTimerId);
-        //     this._loadTimerId = null;
-        // }
         this.node.runAction(cc.sequence(cc.delayTime(0.5), cc.fadeOut(0.5), cc.callFunc(function(){
             cc.director.loadScene('LoginScene'); 
         })));  

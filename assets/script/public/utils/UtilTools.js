@@ -685,12 +685,12 @@ gt.addClickEvent = function(btn, callback, context, noSound) {
 }
 
 // Loading框 
-let LoadingTips = require('views/common/LoadingTips');
+let LoadingTips = require('LoadingTips');
 gt.showLoadingTips = LoadingTips.showLoadingTips;
 gt.removeLoadingTips = LoadingTips.removeLoadingTips;
 
 //事件管理
-let EventMgr = require('public/utils/EventMgr');
+let EventMgr = require('EventMgr');
 gt.addEventHandler       = EventMgr.addEventHandler;
 gt.removeEventHandler    = EventMgr.removeEventHandler;
 gt.removeAllEventHandler = EventMgr.removeAllEventHandler;

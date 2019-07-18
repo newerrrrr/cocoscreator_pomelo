@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.3785641854761779,
-      "y": 0.3785641854761779,
+      "x": 0.5990752083575676,
+      "y": 0.5990752083575676,
       "z": 1
     },
     "_quat": {
@@ -52,10 +52,9 @@
       "z": 0,
       "w": 1
     },
-    "_zIndex": 0,
     "groupIndex": 0,
     "autoReleaseAssets": false,
-    "_id": "814d29e0-5280-49d7-b5e1-bd26a6db7bdf"
+    "_id": "76b56b76-4158-4f07-8538-318dec71d92d"
   },
   {
     "__type__": "cc.Node",
@@ -124,7 +123,6 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "8d7LeZfd1GH5JGI0DYcd8I"
   },
@@ -185,7 +183,6 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "6b6U5QqcRJ9IGPQZQKMz9n"
   },
@@ -287,7 +284,6 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "c4OXDhM3ZEabWqeefTgh64"
   },
@@ -348,7 +344,6 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "9f1AhCoUNASbRKGkxA8MJ+"
   },
@@ -440,7 +435,6 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "efduoV6y1HBrdHE4qlXgWO"
   },
@@ -480,21 +474,6 @@
       "__id__": 8
     },
     "_enabled": true,
-    "transition": 3,
-    "pressedColor": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
-    "hoverColor": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
     "duration": 0.1,
     "zoomScale": 1.1,
     "clickEvents": [
@@ -504,7 +483,37 @@
     ],
     "_N$interactable": true,
     "_N$enableAutoGrayEffect": true,
+    "_N$transition": 3,
+    "transition": 3,
     "_N$normalColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_N$pressedColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "pressedColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_N$hoverColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "hoverColor": {
       "__type__": "cc.Color",
       "r": 255,
       "g": 255,
@@ -537,6 +546,7 @@
       "__id__": 2
     },
     "component": "LoginScene",
+    "_componentId": "",
     "handler": "onBtnLoginWX",
     "customEventData": ""
   },
@@ -600,7 +610,6 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "70IQ8FQU9PWaYPM1IjHXMd"
   },
@@ -640,21 +649,6 @@
       "__id__": 12
     },
     "_enabled": true,
-    "transition": 3,
-    "pressedColor": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
-    "hoverColor": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
     "duration": 0.1,
     "zoomScale": 1.1,
     "clickEvents": [
@@ -664,7 +658,37 @@
     ],
     "_N$interactable": true,
     "_N$enableAutoGrayEffect": true,
+    "_N$transition": 3,
+    "transition": 3,
     "_N$normalColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_N$pressedColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "pressedColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_N$hoverColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "hoverColor": {
       "__type__": "cc.Color",
       "r": 255,
       "g": 255,
@@ -697,6 +721,7 @@
       "__id__": 2
     },
     "component": "LoginScene",
+    "_componentId": "",
     "handler": "onBtnLoginTel",
     "customEventData": ""
   },
@@ -760,7 +785,6 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "57+B/SHo9OI5WM2EsvgYJG"
   },
@@ -800,21 +824,6 @@
       "__id__": 16
     },
     "_enabled": true,
-    "transition": 3,
-    "pressedColor": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
-    "hoverColor": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
     "duration": 0.1,
     "zoomScale": 1.1,
     "clickEvents": [
@@ -824,7 +833,37 @@
     ],
     "_N$interactable": true,
     "_N$enableAutoGrayEffect": true,
+    "_N$transition": 3,
+    "transition": 3,
     "_N$normalColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_N$pressedColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "pressedColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_N$hoverColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "hoverColor": {
       "__type__": "cc.Color",
       "r": 255,
       "g": 255,
@@ -857,6 +896,7 @@
       "__id__": 2
     },
     "component": "LoginScene",
+    "_componentId": "",
     "handler": "onBtnLoginGuest",
     "customEventData": ""
   },
@@ -927,7 +967,6 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "abpept2gROB6SDo80IehjK"
   },
@@ -988,7 +1027,6 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "05js9kBuNOx7odlav5gdyW"
   },
@@ -1003,7 +1041,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "98d3ec64-7b76-4c95-899f-140003842cc6"
+      "__uuid__": "24234bba-742c-46f9-84ce-cadff072c9a2"
     },
     "_type": 1,
     "_sizeMode": 0,
@@ -1077,7 +1115,6 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "12V45riHtJ9poj4/BUX7FY"
   },
@@ -1089,8 +1126,6 @@
       "__id__": 23
     },
     "_enabled": true,
-    "_srcBlendFactor": 1,
-    "_dstBlendFactor": 771,
     "_useOriginalSize": true,
     "_string": "",
     "_N$string": "",
@@ -1102,10 +1137,12 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
+    "_batchAsBitmap": false,
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 1,
+    "_N$cacheMode": 0,
     "_id": "c6tYD+D+RF8ZlgYRW66OZx"
   },
   {
@@ -1165,7 +1202,6 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_zIndex": 0,
     "groupIndex": 0,
     "_id": "2bHmPhC/ZE2ar5eEYFBwej"
   },
@@ -1177,8 +1213,6 @@
       "__id__": 25
     },
     "_enabled": true,
-    "_srcBlendFactor": 1,
-    "_dstBlendFactor": 771,
     "_useOriginalSize": true,
     "_string": "请时输入用户名",
     "_N$string": "请时输入用户名",
@@ -1190,10 +1224,12 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
+    "_batchAsBitmap": false,
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 1,
+    "_N$cacheMode": 0,
     "_id": "64Glto4JJE4JOuvR55IAWq"
   },
   {
@@ -1212,7 +1248,7 @@
     "editingDidEnded": [],
     "editingReturn": [],
     "_N$backgroundImage": {
-      "__uuid__": "98d3ec64-7b76-4c95-899f-140003842cc6"
+      "__uuid__": "24234bba-742c-46f9-84ce-cadff072c9a2"
     },
     "_N$returnType": 0,
     "_N$inputFlag": 5,
@@ -1300,7 +1336,7 @@
     "_id": "7f6rBNu7pFlbXEwFORVqvy"
   },
   {
-    "__type__": "68516Q8zfxDho40SY+luST0",
+    "__type__": "10622vpCXRIOpdjNT+kFHai",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -1310,9 +1346,7 @@
     "btnWX": null,
     "btnTel": null,
     "btnGuest": null,
-    "editbox": {
-      "__id__": 27
-    },
-    "_id": "a7Fnut2r1P1IjGKOA9hc+4"
+    "editbox": null,
+    "_id": "a5VcOqiKhKXKKLhlf3IYD0"
   }
 ]

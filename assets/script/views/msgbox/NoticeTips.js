@@ -1,7 +1,7 @@
 
 //方法一:使用普通脚本加载
 
-// 使用例子: require('views/msgbox/NoticeTips').show("提示内容", null, null, true, {
+// 使用例子: require('NoticeTips').show("提示内容", null, null, true, {
 //             imgOkPath:"texture/common/btn_blue",
 //             strOk:'dfdf'
 //         }); 

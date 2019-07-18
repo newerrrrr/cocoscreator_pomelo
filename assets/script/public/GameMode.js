@@ -42,7 +42,7 @@ M.getPlayerNickHead = function(uid) {
 //钱包数据更新 
 M.onRcvWalletInfo = function(msgTbl) {
     if (msgTbl.code && msgTbl.code < 0 ) {
-        require('views/msgbox/Toast').show(msgTbl.error || '');
+        require('Toast').show(msgTbl.error || '');
         return;
     } 
     gt.playerData.wallet = msgTbl;
@@ -87,7 +87,7 @@ M.onRcvDuplicateLogin = function(msgTbl) {
     cc.log("=== onRcvDuplicateLogin") 
 
     gt.tcp.disconnect() 
-    require('views/msgbox/NoticeTips').show("您的账号已在其他地方登录", function(){ 
+    require('NoticeTips').show("您的账号已在其他地方登录", function(){ 
         cc.director.loadScene('LoadingScene');       
     }, null, true);
 } 
@@ -189,6 +189,6 @@ M.onEnterForeground = function() {
     // gt.dispatchEvent(gt.EventType.CHECK_URL_CLICK) //查询点击链接查看回放或者进入房间
 } 
 
-M.init();
+// M.init();
 
 module.exports = M;

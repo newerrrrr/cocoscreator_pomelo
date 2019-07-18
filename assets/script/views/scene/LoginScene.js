@@ -27,25 +27,25 @@ cc.Class({
         this.node.opacity = 0;
         this.node.runAction(cc.fadeIn(0.7));
 
-        require('InitGame');
+        // require('InitGame');
         gt.autoAdaptDevices(); 
 
         // cc.loader.loadRes('prefab/NoticeTips', function(err, prefab) {
 
         //    var newNode = cc.instantiate(prefab);
         //     cc.director.getScene().addChild(newNode);            
-        // });        
-        // this.node.addComponent('NoticeTips');
+        // }); 
 
-        var testFunc = function(arg1, arg2) {
-            cc.log('------arg1, arg2', arg1, arg2) 
-        }
-        gt.addEventHandler('HLBTEST', this, testFunc.bind(this)) 
-        gt.addEventHandler('HLBTEST2', this, testFunc.bind(this))   
+        // var testFunc = function(arg1, arg2) {
+        //     cc.log('------arg1, arg2', arg1, arg2) 
+        // }
+        // gt.addEventHandler('HLBTEST', this, testFunc.bind(this)) 
+        // gt.addEventHandler('HLBTEST2', this, testFunc.bind(this))   
     },
 
     start () { 
-        // require('views/msgbox/NoticeTips').show("dfdfdfd", 
+        cc.log('----------LoginScene start')
+        // require('NoticeTips').show("dfdfdfd", 
         //     null, null, true, {
         //     imgOkPath:"texture/common/btn_blue",
         //     strOk:'dfdf'
