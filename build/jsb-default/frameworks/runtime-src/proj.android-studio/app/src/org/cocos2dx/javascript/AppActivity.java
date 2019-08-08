@@ -24,19 +24,26 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.javascript;
 
+import org.cocos2dx.javascript.wxapi.WXUtils;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.util.Log;
+import android.view.WindowManager;
 
 public class AppActivity extends Cocos2dxActivity {
+    public static String roomId = "";
+    public static String shareCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("HLB", "-----------------------onCreate");
         // Workaround in
         // https://stackoverflow.com/questions/16283079/re-launch-of-activity-on-home-button-but-only-the-first-time/16447508
         if (!isTaskRoot()) {
@@ -49,6 +56,12 @@ public class AppActivity extends Cocos2dxActivity {
         // DO OTHER INITIALIZATION BELOW
         SDKWrapper.getInstance().init(this);
 
+        //by hlb, start
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        SystemAPI.init(this);
+        WXUtils.init(this);
+        parseUrlParam(getIntent());
+        //by hlb, end
     }
 
     @Override
@@ -79,7 +92,9 @@ public class AppActivity extends Cocos2dxActivity {
     protected void onDestroy() {
         super.onDestroy();
         SDKWrapper.getInstance().onDestroy();
-
+        //by hlb, start
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        //by hlb, end
     }
 
     @Override
@@ -92,6 +107,8 @@ public class AppActivity extends Cocos2dxActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         SDKWrapper.getInstance().onNewIntent(intent);
+        //by hlb, start
+        parseUrlParam(intent);
     }
 
     @Override
@@ -134,5 +151,20 @@ public class AppActivity extends Cocos2dxActivity {
     protected void onStart() {
         SDKWrapper.getInstance().onStart();
         super.onStart();
+    }
+
+    public boolean parseUrlParam(Intent intent) {
+        if (intent == null) return false;
+
+        String action = intent.getAction();
+        if(Intent.ACTION_VIEW.equals(action)) {
+            Uri deeplink = intent.getData();
+            if (deeplink != null) {
+                AppActivity.roomId = deeplink.getQueryParameter("roomid");
+                AppActivity.shareCode = deeplink.getQueryParameter("share_code");
+                return true;
+            }
+        }
+        return false;
     }
 }

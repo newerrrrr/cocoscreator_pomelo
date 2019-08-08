@@ -1,0 +1,160 @@
+package org.cocos2dx.javascript.wxapi;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+
+import org.cocos2dx.javascript.AppActivity;
+
+import com.happy9.pyqps.R;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXImageObject;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+
+//开放给 JS 的外部接口
+public class WXUtils {
+    private static AppActivity app = null;
+
+    //在 AppActivity 中调用初始化
+    public static void init(AppActivity context) {
+        Log.d(Constant.LOG_TAG,"==== SystemAPI init");
+        app = context;
+    }
+
+    public static void getWeixinToken(final String weixinId) {
+        Log.d(Constant.LOG_TAG, "------ getWeixinToken");
+        app.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Log.d(Constant.LOG_TAG, "call LoginWx begin");
+                    IWXAPI api = WXAPIFactory.createWXAPI(app, weixinId, false);
+                    api.registerApp(weixinId);
+                    SendAuth.Req req = new SendAuth.Req();
+                    req.scope = "snsapi_userinfo";
+                    req.state = "klqpdn";
+                    api.sendReq(req);
+                    Log.i(Constant.LOG_TAG, "call LoginWx end");
+
+                }
+                catch (Exception e) {
+                    Log.e(Constant.LOG_TAG, e.toString(), e);
+                }
+            }
+        });
+    }
+
+    //分享图片
+    public static void shareImage(final String weixinId, final String shareTo, final String filePath) {
+        app.runOnGLThread(new Runnable() {
+            @Override
+            public void run() {
+
+                int THUMB_SIZE = 140; //缩略图大小
+
+                try {
+                    Bitmap bmp = null;
+                    try {
+                        File file = new File(filePath);
+                        if(file.exists())
+                        {
+                            bmp = BitmapFactory.decodeFile(filePath);
+                        }
+                    }
+                    catch (Exception e) {
+                        Log.e(Constant.LOG_TAG, " share image not exist", e);
+                        return;
+                    }
+                    //获取实例
+                    IWXAPI api = WXAPIFactory.createWXAPI(app, weixinId, false);
+                    api.registerApp(weixinId);
+
+                    //初始化 WXImageObject 和 WXMediaMessage 对象
+                    WXImageObject imgObj = new WXImageObject(bmp);
+                    WXMediaMessage msg = new WXMediaMessage();
+                    msg.mediaObject = imgObj;
+
+                    //设置缩略图
+                    int w = bmp.getWidth() * THUMB_SIZE / bmp.getHeight();
+                    Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, w, THUMB_SIZE, true);
+                    msg.thumbData = bmpToByteArray(thumbBmp, true);
+                    bmp.recycle();
+
+                    //构造一个Req
+                    SendMessageToWX.Req req = new SendMessageToWX.Req();
+                    req.transaction = shareTo + String.valueOf(System.currentTimeMillis()); //标识一个唯一请求
+                    req.message = msg;
+                    if (shareTo.equals("timeline")) { //分享到朋友圈
+                        req.scene = SendMessageToWX.Req.WXSceneTimeline;
+                    }
+                    else { //分享到对话
+                        req.scene = SendMessageToWX.Req.WXSceneSession;
+                    }
+                    api.sendReq(req);
+                }
+                catch (Exception e) {
+                    Log.e(Constant.LOG_TAG, "WeixinImageMessage->", e);
+                }
+
+            }
+        });
+    }
+
+    //分享APP url
+    public void shareAppInfo(final String weixinId, final String shareTo, final String title, final String message, final String url) {
+        app.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                //获取实例
+                IWXAPI api = WXAPIFactory.createWXAPI(app, weixinId, false);
+                api.registerApp(weixinId);
+
+                WXWebpageObject webpage = new WXWebpageObject();
+                webpage.webpageUrl = url;
+                WXMediaMessage msg = new WXMediaMessage(webpage);
+                msg.title = title;
+                msg.description = message;
+
+                //缩略图
+                Bitmap thumb = BitmapFactory.decodeResource(app.getResources(), R.mipmap.ic_launcher);
+                msg.thumbData = bmpToByteArray(thumb, true);
+
+                SendMessageToWX.Req req = new SendMessageToWX.Req();
+                req.transaction = String.valueOf(System.currentTimeMillis());
+                req.message = msg;
+                if (shareTo.equals("timeline")) { //朋友圈
+                    req.scene = SendMessageToWX.Req.WXSceneTimeline;
+                } else { //会话
+                    req.scene = SendMessageToWX.Req.WXSceneSession;
+                }
+                api.sendReq(req);
+            }
+        });
+    }
+
+    public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle) {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 60, output);
+        if (needRecycle) {
+            bmp.recycle();
+        }
+
+        byte[] result = output.toByteArray();
+        try {
+            output.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+}
