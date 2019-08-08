@@ -7,7 +7,7 @@ android {
     buildToolsVersion PROP_BUILD_TOOLS_VERSION
 
     defaultConfig {
-        applicationId "org.cocos2d.HLBJS"
+        applicationId "com.happy9.pyqps"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
         versionCode 1
@@ -136,4 +136,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
     implementation fileTree(dir: "../../../cocos2d-x/cocos/platform/android/java/libs", include: ['*.jar'])
     implementation project(':libcocos2dx')
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 }

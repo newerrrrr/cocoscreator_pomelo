@@ -20,8 +20,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.3079587524596397,
-      "y": 0.3079587524596397,
+      "x": 0.5990752083575676,
+      "y": 0.5990752083575676,
       "z": 1
     },
     "autoReleaseAssets": false
@@ -428,7 +428,7 @@
         },
         "_useOriginalSize": false,
         "_N$backgroundImage": {
-          "__uuid__": "980+xke3ZMlYmfFAADhCzG"
+          "__uuid__": "24I0u6dCxG+YTOyt/wcsmi"
         },
         "_N$inputMode": 6,
         "_N$fontSize": 28,
@@ -474,7 +474,7 @@
           "__id__": 10
         },
         "_spriteFrame": {
-          "__uuid__": "980+xke3ZMlYmfFAADhCzG"
+          "__uuid__": "24I0u6dCxG+YTOyt/wcsmi"
         },
         "_type": 1,
         "_sizeMode": 0,

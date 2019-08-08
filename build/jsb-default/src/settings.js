@@ -87,12 +87,16 @@ window._CCSettings = {
             uuid: "3ea6yAolFNq5X8cHBDgRUc"
         },
         {
+            url: "db://assets/res/scene/LoadingScene.fire",
+            uuid: "01n8orRLpMEI4Bcar8HRFY"
+        },
+        {
             url: "db://assets/res/scene/LoginScene.fire",
             uuid: "76tWt2QVhPB4U4MY3scdkt"
         },
         {
-            url: "db://assets/res/scene/LoadingScene.fire",
-            uuid: "01n8orRLpMEI4Bcar8HRFY"
+            url: "db://assets/res/scene/HotUpdate.fire",
+            uuid: "dcNbTS+1ZOtbBShZzHfgm4"
         }
     ],
     packedAssets: {},

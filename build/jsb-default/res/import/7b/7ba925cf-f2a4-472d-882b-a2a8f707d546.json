@@ -42,8 +42,7 @@
       "__type__": "cc.Vec3",
       "x": 622,
       "y": 370
-    },
-    "_zIndex": 0
+    }
   },
   {
     "__type__": "cc.Node",
@@ -90,8 +89,7 @@
       "__type__": "cc.Size",
       "width": 600,
       "height": 400
-    },
-    "_zIndex": 0
+    }
   },
   {
     "__type__": "cc.Node",
@@ -127,8 +125,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "y": 200
-    },
-    "_zIndex": 0
+    }
   },
   {
     "__type__": "cc.Node",
@@ -176,8 +173,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "y": -7
-    },
-    "_zIndex": 0
+    }
   },
   {
     "__type__": "cc.Node",
@@ -216,8 +212,7 @@
       "__type__": "cc.Vec3",
       "x": 1,
       "y": -27
-    },
-    "_zIndex": 0
+    }
   },
   {
     "__type__": "cc.Node",
@@ -264,8 +259,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "y": 20
-    },
-    "_zIndex": 0
+    }
   },
   {
     "__type__": "cc.Node",
@@ -304,8 +298,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "y": -200
-    },
-    "_zIndex": 0
+    }
   },
   {
     "__type__": "cc.Node",
@@ -395,8 +388,7 @@
       "__type__": "cc.Vec3",
       "x": -160,
       "y": 25
-    },
-    "_zIndex": 0
+    }
   },
   {
     "__type__": "cc.Node",
@@ -444,8 +436,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "y": 36
-    },
-    "_zIndex": 0
+    }
   },
   {
     "__type__": "cc.Node",
@@ -533,8 +524,7 @@
       "__type__": "cc.Vec3",
       "x": 160,
       "y": 25
-    },
-    "_zIndex": 0
+    }
   },
   {
     "__type__": "cc.Node",
@@ -581,7 +571,6 @@
     "_position": {
       "__type__": "cc.Vec3",
       "y": 36
-    },
-    "_zIndex": 0
+    }
   }
 ]

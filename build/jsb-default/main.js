@@ -3,6 +3,16 @@ if (false) {
     BK.Script.loadlib('GameRes://libs/qqplay-adapter.js');
 }
 
+//by hlb for hotupdate, start-----
+if (jsb) {
+    var searchPaths = localStorage.getItem('HotUpdateSearchPaths') 
+    if (searchPaths) {
+        jsb.fileUtils.setSearchPaths(JSON.parse(searchPaths)); 
+    } 
+} 
+//by hlb for hotupdate, end-----
+
+
 window.boot = function () {
     var settings = window._CCSettings;
     window._CCSettings = undefined;
@@ -198,7 +208,6 @@ if (false) {
     window.boot();
 }
 else if (window.jsb) {
-
     var isRuntime = (typeof loadRuntime === 'function');
     if (isRuntime) {
         require('src/settings.js');

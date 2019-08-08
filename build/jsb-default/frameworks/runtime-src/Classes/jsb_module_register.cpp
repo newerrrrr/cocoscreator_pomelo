@@ -92,6 +92,9 @@
 
 #endif // (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
+#include "GameTools.h" //by hlb20190731
+
+
 using namespace cocos2d;
 
 bool jsb_register_all_modules()
@@ -177,5 +180,9 @@ bool jsb_register_all_modules()
         PoolManager::getInstance()->getCurrentPool()->clear();
         JSBClassType::destroy();
     });
+    
+    //by hlb 20190731
+    se->addRegisterCallback(js_register_GameTools);
+
     return true;
 }

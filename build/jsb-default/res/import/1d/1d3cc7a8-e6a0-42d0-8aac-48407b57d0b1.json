@@ -58,8 +58,7 @@
       "__type__": "cc.Size",
       "width": 1334,
       "height": 750
-    },
-    "_zIndex": 0
+    }
   },
   {
     "__type__": "cc.Node",
@@ -75,7 +74,7 @@
           "__id__": 2
         },
         "_spriteFrame": {
-          "__uuid__": "01uNVnNmFEE4vgD10AcngS"
+          "__uuid__": "24I0u6dCxG+YTOyt/wcsmi"
         },
         "_sizeMode": 0
       }
@@ -100,8 +99,7 @@
       "x": 1.2,
       "y": 1.2,
       "z": 1
-    },
-    "_zIndex": 0
+    }
   },
   {
     "__type__": "cc.Node",
@@ -141,8 +139,7 @@
       "x": 1.5,
       "y": 1.5,
       "z": 1
-    },
-    "_zIndex": 0
+    }
   },
   {
     "__type__": "cc.Node",
@@ -188,7 +185,6 @@
     "_position": {
       "__type__": "cc.Vec3",
       "y": -80
-    },
-    "_zIndex": 0
+    }
   }
 ]
