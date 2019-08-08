@@ -1,33 +1,41 @@
-package org.cocos2dx.javascript.wxapi;
+package com.happy9.pyqps.wxapi;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-
 import org.cocos2dx.javascript.AppActivity;
-
 import com.happy9.pyqps.R;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 //开放给 JS 的外部接口
 public class WXUtils {
     private static AppActivity app = null;
+    private static IWXAPI api = null;
 
-    //在 AppActivity 中调用初始化
+    //在 AppActivity.java 中调用初始化并注册微信
     public static void init(AppActivity context) {
-        Log.d(Constant.LOG_TAG,"==== SystemAPI init");
+        Log.d(Constant.LOG_TAG,"==== WXUtils init");
         app = context;
+
+        /// 通过WXAPIFactory工厂，获取IWXAPI的实例
+        api = WXAPIFactory.createWXAPI(app, Constant.WX_APPID, false);
+        // 将应用的appId注册到微信
+        api.registerApp(Constant.WX_APPID);
     }
 
+    //******************************** 以下为 JS 端 调用接口 **********************************//
+
+    //申请用户授权
     public static void getWeixinToken(final String weixinId) {
         Log.d(Constant.LOG_TAG, "------ getWeixinToken");
         app.runOnUiThread(new Runnable() {
@@ -35,14 +43,14 @@ public class WXUtils {
             public void run() {
                 try {
                     Log.d(Constant.LOG_TAG, "call LoginWx begin");
-                    IWXAPI api = WXAPIFactory.createWXAPI(app, weixinId, false);
-                    api.registerApp(weixinId);
+                    IWXAPI wxapi = WXAPIFactory.createWXAPI(app, weixinId, false);
+                    wxapi.registerApp(weixinId);
+
                     SendAuth.Req req = new SendAuth.Req();
                     req.scope = "snsapi_userinfo";
                     req.state = "klqpdn";
-                    api.sendReq(req);
-                    Log.i(Constant.LOG_TAG, "call LoginWx end");
-
+                    wxapi.sendReq(req);
+                    Log.d(Constant.LOG_TAG, "call LoginWx end");
                 }
                 catch (Exception e) {
                     Log.e(Constant.LOG_TAG, e.toString(), e);
@@ -156,5 +164,4 @@ public class WXUtils {
 
         return result;
     }
-
 }

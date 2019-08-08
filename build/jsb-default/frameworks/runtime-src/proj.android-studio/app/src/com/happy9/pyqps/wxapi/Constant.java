@@ -1,4 +1,4 @@
-package org.cocos2dx.javascript.wxapi;
+package com.happy9.pyqps.wxapi;
 
 public class Constant {
     public final static String WX_APPID = "wxb64d088517456e5f";

@@ -1,11 +1,14 @@
-package org.cocos2dx.javascript.wxapi;
+package com.happy9.pyqps.wxapi;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.modelmsg.ShowMessageFromWX;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -16,6 +19,9 @@ import org.cocos2dx.lib.Cocos2dxJavascriptJavaBridge;
 
 import static org.cocos2dx.lib.Cocos2dxHelper.runOnGLThread;
 
+
+//此文件必须放在 包名下的wxapi/目录下,比如 com.happy9.pyqps.wxapi.WXEntryActivity,  同时 Androidmanifest.xml 必须将此 Activity 导出 exported="true"
+//否则无法启用此Activity
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     private IWXAPI api;
 
@@ -23,13 +29,37 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(Constant.LOG_TAG, "------ WXEntryActivity:onCreate");
-        api = WXAPIFactory.createWXAPI(this, Constant.WX_APPID, false);
-        api.handleIntent(getIntent(), this);
+        api = WXAPIFactory.createWXAPI(this, Constant.WX_APPID, false);//false:不检查签名
+        try {
+            Intent intent = getIntent();
+            api.handleIntent(intent, this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        setIntent(intent);
+        api.handleIntent(intent, this);
     }
 
     @Override
     public void onReq(BaseReq baseReq) {
         Log.d(Constant.LOG_TAG, "------ WXEntryActivity:onReq" + baseReq.toString());
+
+        switch (baseReq.getType()) {
+            case ConstantsAPI.COMMAND_GETMESSAGE_FROM_WX:
+//                goToGetMsg();
+                break;
+            case ConstantsAPI.COMMAND_SHOWMESSAGE_FROM_WX:
+//                goToShowMsg((ShowMessageFromWX.Req) baseReq);
+                break;
+            default:
+                break;
+        }
         finish();
     }
 
@@ -38,25 +68,29 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         Log.d(Constant.LOG_TAG, "------ WXEntryActivity:onResp:" + baseResp.toString());
 
         int type = baseResp.getType();
-        String tagStr = "";
-        if(type == 1) {
+        String tagStr = ""; //用于区分JS 函数的用户callback
+        if(type == ConstantsAPI.COMMAND_SENDAUTH) {
             tagStr = Constant.TYPE_WEIXIN_TOKEN;
-        }else if(type == 2) {
+        }
+        else if(type == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX) {
             tagStr = Constant.TYPE_WEIXIN_SHARE;
-        }else if(type == 5) {
+        }
+        else if(type == ConstantsAPI.COMMAND_PAY_BY_WX) {
             tagStr = Constant.TYPE_WEIXIN_PAY;
         }
+        Log.d(Constant.LOG_TAG, "------ onResp, type:" + type);
+        Log.d(Constant.LOG_TAG, "------ onResp, errCode:" + baseResp.errCode);
 
         switch (baseResp.errCode){
             case BaseResp.ErrCode.ERR_OK: //用户同意
                 Log.d(Constant.LOG_TAG, "Resp OK");
                 String jsFuncPara = "";
-                if(type == 1){
+                if(type == ConstantsAPI.COMMAND_SENDAUTH){
                     SendAuth.Resp tempResp = (SendAuth.Resp) baseResp;
                     String code = tempResp.code;
                     jsFuncPara = this.bindMsg(tagStr, 1, code);
                 }
-                else if(type == 2 || type == 5){
+                else if(type == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX || type == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX){
                     jsFuncPara = this.bindMsg(tagStr, 1, "");
                 }
                 else{
@@ -64,7 +98,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 }
                 //将结果返回给 JS 端
                 if (!jsFuncPara.equals("")) {
-                    String sb = "gt.WxMgr.execCallback(";
+                    String sb = "gt.wxMgr.execCallback(";
                     sb += ("'" + tagStr + "',");
                     sb += ("'" + jsFuncPara + "')");
                     evalString(sb);
@@ -74,14 +108,15 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             case BaseResp.ErrCode.ERR_USER_CANCEL: //用户取消
                 Log.d(Constant.LOG_TAG, "CANCEL");
                 String jsPara = "";
-                if(type == 1) {
+                if(type == ConstantsAPI.COMMAND_SENDAUTH) {
                     jsPara = this.bindMsg(tagStr, 0, "");
-                }else {
+                }
+                else {
                     jsPara = this.bindMsg(tagStr, -2, "");
                 }
                 //将结果返回给 JS 端
                 if (!jsPara.equals("")) {
-                    String sb = "gt.WxMgr.execCallback(";
+                    String sb = "gt.wxMgr.execCallback(";
                     sb += ("'" + tagStr + "',");
                     sb += ("'" + jsPara + "')");
                     evalString(sb);
@@ -91,14 +126,15 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             case BaseResp.ErrCode.ERR_AUTH_DENIED:  //用户拒绝
                 Log.d(Constant.LOG_TAG, "ERR_AUTH_DENIED");
                 String para = "";
-                if(type == 1) {
+                if(type == ConstantsAPI.COMMAND_SENDAUTH) {
                     para = this.bindMsg(tagStr, 0, "");
-                }else {
+                }
+                else {
                     para = this.bindMsg(tagStr, -4, "");
                 }
                 //将结果返回给 JS 端
                 if (!para.equals("")) {
-                    String sb = "gt.WxMgr.execCallback(";
+                    String sb = "gt.wxMgr.execCallback(";
                     sb += ("'" + tagStr + "',");
                     sb += ("'" + para + "')");
                     evalString(sb);
@@ -108,7 +144,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             default:
                 Log.d(Constant.LOG_TAG, "default");
                 String paras = this.bindMsg(tagStr, -3, "");
-                String sb = "gt.WxMgr.execCallback(";
+                String sb = "gt.wxMgr.execCallback(";
                 sb += ("'" + tagStr + "',");
                 sb += ("'" + paras + "')");
                 evalString(sb);

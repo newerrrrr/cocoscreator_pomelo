@@ -24,7 +24,6 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.javascript;
 
-import org.cocos2dx.javascript.wxapi.WXUtils;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
@@ -35,6 +34,8 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.WindowManager;
+
+import com.happy9.pyqps.wxapi.WXUtils;
 
 public class AppActivity extends Cocos2dxActivity {
     public static String roomId = "";
