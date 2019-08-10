@@ -33,7 +33,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         try {
             Intent intent = getIntent();
             api.handleIntent(intent, this);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -88,14 +89,15 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 if(type == ConstantsAPI.COMMAND_SENDAUTH){
                     SendAuth.Resp tempResp = (SendAuth.Resp) baseResp;
                     String code = tempResp.code;
-                    jsFuncPara = this.bindMsg(tagStr, 1, code);
+                    jsFuncPara =  this.bindMsg(tagStr, "SUCCESS", code );
                 }
                 else if(type == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX || type == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX){
-                    jsFuncPara = this.bindMsg(tagStr, 1, "");
+                    jsFuncPara = this.bindMsg(tagStr, "SUCCESS", "");
                 }
                 else{
                     Log.d(Constant.LOG_TAG, "onResp type is else");
                 }
+
                 //将结果返回给 JS 端
                 if (!jsFuncPara.equals("")) {
                     String sb = "gt.wxMgr.execCallback(";
@@ -108,12 +110,13 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             case BaseResp.ErrCode.ERR_USER_CANCEL: //用户取消
                 Log.d(Constant.LOG_TAG, "CANCEL");
                 String jsPara = "";
-                if(type == ConstantsAPI.COMMAND_SENDAUTH) {
-                    jsPara = this.bindMsg(tagStr, 0, "");
-                }
-                else {
-                    jsPara = this.bindMsg(tagStr, -2, "");
-                }
+                jsPara = this.bindMsg(tagStr, "CANCEL", "");
+//                if(type == ConstantsAPI.COMMAND_SENDAUTH) {
+//                    jsPara = this.bindMsg(tagStr, "CANCEL", "");
+//                }
+//                else {
+//                    jsPara = this.bindMsg(tagStr, -2, "");
+//                }
                 //将结果返回给 JS 端
                 if (!jsPara.equals("")) {
                     String sb = "gt.wxMgr.execCallback(";
@@ -126,12 +129,13 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             case BaseResp.ErrCode.ERR_AUTH_DENIED:  //用户拒绝
                 Log.d(Constant.LOG_TAG, "ERR_AUTH_DENIED");
                 String para = "";
-                if(type == ConstantsAPI.COMMAND_SENDAUTH) {
-                    para = this.bindMsg(tagStr, 0, "");
-                }
-                else {
-                    para = this.bindMsg(tagStr, -4, "");
-                }
+                jsPara = this.bindMsg(tagStr, "DENIED", "");
+//                if(type == ConstantsAPI.COMMAND_SENDAUTH) {
+//                    para = this.bindMsg(tagStr, 0, "");
+//                }
+//                else {
+//                    para = this.bindMsg(tagStr, -4, "");
+//                }
                 //将结果返回给 JS 端
                 if (!para.equals("")) {
                     String sb = "gt.wxMgr.execCallback(";
@@ -143,7 +147,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
             default:
                 Log.d(Constant.LOG_TAG, "default");
-                String paras = this.bindMsg(tagStr, -3, "");
+                String paras = this.bindMsg(tagStr, "Fail", "");
                 String sb = "gt.wxMgr.execCallback(";
                 sb += ("'" + tagStr + "',");
                 sb += ("'" + paras + "')");
@@ -153,8 +157,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         this.finish();
     }
 
-    private String bindMsg(String type, int status, String code) {
-        return "{\"type\":\"" + type + "\", \"status\":" + status +", \"code\":\""+ code + "\"}";
+    private String bindMsg(String type, String status, String code) {
+        return "{\"type\":\"" + type + "\", \"status\":\"" + status +"\", \"code\":\""+ code + "\"}";
     }
 
     //在 GL 线程调用JS 脚本

@@ -1,6 +1,5 @@
 package com.happy9.pyqps.wxapi;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -11,7 +10,6 @@ import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
-import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import java.io.ByteArrayOutputStream;
@@ -33,24 +31,25 @@ public class WXUtils {
         api.registerApp(Constant.WX_APPID);
     }
 
+
     //******************************** 以下为 JS 端 调用接口 **********************************//
 
+    //是否已安装微信
+    public static boolean isWXAppInstalled() {
+        return api.isWXAppInstalled();
+    }
+
     //申请用户授权
-    public static void getWeixinToken(final String weixinId) {
-        Log.d(Constant.LOG_TAG, "------ getWeixinToken");
+    public static void getWeixinAuth() {
+        Log.d(Constant.LOG_TAG, "WXUtils:getWeixinAuth");
         app.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Log.d(Constant.LOG_TAG, "call LoginWx begin");
-                    IWXAPI wxapi = WXAPIFactory.createWXAPI(app, weixinId, false);
-                    wxapi.registerApp(weixinId);
-
                     SendAuth.Req req = new SendAuth.Req();
                     req.scope = "snsapi_userinfo";
                     req.state = "klqpdn";
-                    wxapi.sendReq(req);
-                    Log.d(Constant.LOG_TAG, "call LoginWx end");
+                    api.sendReq(req);
                 }
                 catch (Exception e) {
                     Log.e(Constant.LOG_TAG, e.toString(), e);
