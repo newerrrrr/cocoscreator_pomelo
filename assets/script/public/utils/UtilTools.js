@@ -669,6 +669,25 @@ gt.isEmptyObject = function(obj) {
     return true;
 }
 
+var cloneObj = function (obj) { 
+    var newObj = {}; 
+    if (obj instanceof Array) { 
+        newObj = []; 
+    } 
+    for (var key in obj) { 
+        var val = obj[key]; 
+        newObj[key] = typeof val === 'object' ? cloneObj(val): val; 
+    } 
+    return newObj; 
+};
+gt.cloneObj = cloneObj;
+
+//判断obj是否为json对象
+gt.isJson = function(obj) {
+    var isjson = typeof(obj) == "object" && Object.prototype.toString.call(obj).toLowerCase() == "[object object]" && !obj.length; 
+    return isjson;
+}
+
 // 按钮点击事件
 //callback:允许该参数传入的时候已绑定上下文 
 gt.addClickEvent = function(btn, callback, context, noSound) {

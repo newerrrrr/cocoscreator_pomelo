@@ -399,7 +399,7 @@ window.__require = function e(t, n, r) {
       gt.isReview = false;
       gt.debug = true;
       gt.open_guest = true;
-      gt.open_hotupdate = true;
+      gt.open_hotupdate = false;
       gt.designSize = cc.size(1334, 750);
       gt.center = cc.v2(gt.designSize.width / 2, gt.designSize.height / 2);
       gt.GameID = {
@@ -890,6 +890,7 @@ window.__require = function e(t, n, r) {
       require("./public/utils/Debug").init(gt);
       gt.EventType = require("./config/EventType");
       gt.tcp = require("./public/net/NetTcp");
+      gt.http = require("./public/net/NetHttp");
       gt.deviceApi = require("./public/utils/DeviceApi");
       gt.wxMgr = require("./public/utils/WxMgr");
       gt.audio = require("./public/utils/AudioMgr");
@@ -904,6 +905,7 @@ window.__require = function e(t, n, r) {
     "./config/GameConfig": "GameConfig",
     "./config/MsgConfig": "MsgConfig",
     "./public/GameMode": "GameMode",
+    "./public/net/NetHttp": "NetHttp",
     "./public/net/NetTcp": "NetTcp",
     "./public/utils/AudioMgr": "AudioMgr",
     "./public/utils/Debug": "Debug",
@@ -1035,6 +1037,47 @@ window.__require = function e(t, n, r) {
       },
       onBtnLoginWX: function onBtnLoginWX() {
         cc.log("===== onBtnLoginWX");
+        if (!gt.wxMgr.isWXAppInstalled()) {
+          gt.ui.toast.show("\u60a8\u8fd8\u6ca1\u6709\u5b89\u88c5\u5fae\u4fe1\u54e6\uff01");
+          return;
+        }
+        var getWeixinUserInfo = function getWeixinUserInfo(accessToken, refreshToken, openid) {
+          var url = "https://api.weixin.qq.com/sns/userinfo?access_token=" + accessToken + "&openid=" + openid;
+          gt.http.getData(url, function(result, resp) {
+            if (!result) return;
+            cc.log("---------------user info resp: ", resp);
+            resp = JSON.parse(resp);
+            if (resp.errcode) {
+              gt.ui.noticeTips.show("\u60a8\u7684\u5fae\u4fe1\u6388\u6743\u4fe1\u606f\u5df2\u5931\u6548, \u8bf7\u91cd\u65b0\u767b\u5f55\uff01", null, null, true);
+              return;
+            }
+          }.bind(this));
+        };
+        var getWeixinToken = function getWeixinToken(authCode) {
+          var url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + gt.wxAppId + "&secret=" + gt.wxSecret + "&code=" + authCode + "&grant_type=authorization_code";
+          gt.http.getData(url, function(result, resp) {
+            if (!result) return;
+            cc.log("---------------token resp: ", resp);
+            resp = JSON.parse(resp);
+            if (resp.errcode) return;
+            getWeixinUserInfo(resp.access_token, resp.refresh_token, resp.openid);
+          }.bind(this));
+        };
+        gt.wxMgr.getWeixinAuth(function(respJson) {
+          cc.log("weixin auth resp: ", respJson);
+          gt.removeLoadingTips();
+          "string" == typeof respJson && "" !== respJson && (respJson = JSON.parse(respJson));
+          if ("CANCEL" == respJson.status) {
+            cc.log("---- weixin auth cancel");
+            return;
+          }
+          if ("SUCCESS" !== respJson.status) {
+            cc.log("---- weixin auth fail");
+            gt.ui.noticeTips.show("\u5fae\u4fe1\u6388\u6743\u5931\u8d25", null, null, true);
+            return;
+          }
+          getWeixinToken(respJson.code);
+        }.bind(this));
       },
       onBtnLoginTel: function onBtnLoginTel() {
         cc.log("===== onBtnLoginTel");
@@ -1085,6 +1128,59 @@ window.__require = function e(t, n, r) {
       gt.WALLET_INFO = 1006;
       gt.REPLAY_BY_SHARE_CODE = 2003;
     };
+    cc._RF.pop();
+  }, {} ],
+  NetHttp: [ function(require, module, exports) {
+    "use strict";
+    cc._RF.push(module, "5128eD+lM9Fwqzg/qIDR9UF", "NetHttp");
+    "use strict";
+    var _typeof = "function" === typeof Symbol && "symbol" === typeof Symbol.iterator ? function(obj) {
+      return typeof obj;
+    } : function(obj) {
+      return obj && "function" === typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+    var NetHttp = {};
+    NetHttp.postData = function(url, data, callback, isBinary) {
+      var xhr = cc.loader.getXMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (4 === xhr.readyState && xhr.status >= 200 && xhr.status < 300) try {
+          var respone = xhr.responseText;
+          isBinary || (respone = JSON.parse(respone));
+          callback && callback(true, respone);
+        } catch (e) {
+          cc.log("HTTP Error: " + e);
+          callback && callback(false);
+        } else cc.log("http error: readyState=" + xhr.readyState + ",  xhr.status=" + xhr.status);
+      };
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+      xhr.setRequestHeader("Access-Control-Allow-Methods", "GET, POST");
+      xhr.setRequestHeader("Access-Control-Allow-Headers", "x-requested-with,content-type");
+      isBinary ? xhr.setRequestHeader("Content-Type", "application/octet-stream") : xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.timeout = 8e3;
+      NetHttp.isJson(data) && (data = JSON.stringify(data));
+      xhr.send(data);
+    };
+    NetHttp.getData = function(url, callback) {
+      var xhr = cc.loader.getXMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (4 === xhr.readyState && xhr.status >= 200 && xhr.status < 300) {
+          var respone = xhr.responseText;
+          callback && callback(true, respone);
+        } else 4 === xhr.readyState && 401 == xhr.status && callback(false, {
+          status: 401
+        });
+      };
+      xhr.withCredentials = true;
+      xhr.open("GET", url, true);
+      xhr.timeout = 8e3;
+      xhr.send();
+    };
+    NetHttp.isJson = function(obj) {
+      var isjson = "object" == ("undefined" === typeof obj ? "undefined" : _typeof(obj)) && "[object object]" == Object.prototype.toString.call(obj).toLowerCase() && !obj.length;
+      return isjson;
+    };
+    module.exports = NetHttp;
     cc._RF.pop();
   }, {} ],
   NetTcp: [ function(require, module, exports) {
@@ -1702,6 +1798,10 @@ window.__require = function e(t, n, r) {
         return newObj;
       };
       gt.cloneObj = cloneObj;
+      gt.isJson = function(obj) {
+        var isjson = "object" == ("undefined" === typeof obj ? "undefined" : _typeof(obj)) && "[object object]" == Object.prototype.toString.call(obj).toLowerCase() && !obj.length;
+        return isjson;
+      };
       gt.addClickEvent = function(btn, callback, context, noSound) {
         if (null == btn) return null;
         btn.on("click", function() {
@@ -1728,72 +1828,26 @@ window.__require = function e(t, n, r) {
     cc._RF.push(module, "f7c61Tvs/1Mtah+1S8FQQFp", "WxMgr");
     "use strict";
     var WxMgr = {};
-    var DeviceApi = require("DeviceApi");
+    var Tag_WeiXinToken = "weixin_token";
+    var Tag_WeiXinShare = "weixin_share";
+    var Tag_WeiXinPay = "weixin_pay";
+    var ANDROID_CLASS_NAME = "com/happy9/pyqps/wxapi/WXUtils";
+    var callBackHandler = {};
+    WxMgr.execCallback = function(tag, para) {
+      callBackHandler[tag] && callBackHandler[tag](para);
+    };
     WxMgr.isWXAppInstalled = function() {
-      var bInstall = false;
-      var nResult = DeviceApi.isInstallWXApp();
-      1 == Number(nResult) && (bInstall = true);
-      return bInstall;
+      var result = false;
+      cc.sys.os == cc.sys.OS_ANDROID ? result = jsb.reflection.callStaticMethod(ANDROID_CLASS_NAME, "isWXAppInstalled", "()Z") : cc.sys.os == cc.sys.OS_IOS;
+      return result;
     };
-    WxMgr.wxShareText = function(toScene, textStr, pCall) {
-      var self = this;
-      self._shareEndCall = pCall;
-      var data = {};
-      data.shareScene = toScene;
-      data.shareType = 1;
-      data.textMsg = textStr;
-      DeviceApi.addCallback(self.shareResultCall.bind(this), "shareResultCall");
-      cDeviceApi.wxShare(JSON.stringify(data));
-    };
-    WxMgr.wxShareImg = function(toScene, imgPath, pCall) {
-      var self = this;
-      self._shareEndCall = pCall;
-      var data = {};
-      data.shareScene = toScene;
-      data.shareType = 2;
-      data.imgPath = imgPath;
-      DeviceApi.addCallback(self.shareResultCall.bind(this), "shareResultCall");
-      DeviceApi.wxShare(JSON.stringify(data));
-    };
-    WxMgr.wxShareWeb = function(toScene, title, des, imgUrl, urlLink, pCall) {
-      var self = this;
-      self._shareEndCall = pCall;
-      var data = {};
-      data.shareScene = toScene;
-      data.shareType = 3;
-      data.linkUrl = urlLink;
-      data.imgUrl = imgUrl;
-      data.title = title;
-      data.des = des;
-      DeviceApi.addCallback(self.shareResultCall.bind(this), "shareResultCall");
-      DeviceApi.wxShare(JSON.stringify(data));
-    };
-    WxMgr.shareResultCall = function(data) {
-      var self = this;
-      self._shareEndCall && self._shareEndCall(data);
-    };
-    WxMgr.openWxApp = function() {
-      var bResult = false;
-      bResult = DeviceApi.openWXApp();
-      return bResult;
-    };
-    WxMgr.getWXToken = function() {
-      var token = gt.getLocal("wxToken");
-      if (token && token.length > 0) return token;
-      return null;
-    };
-    WxMgr.saveWXToken = function(token) {
-      token && gt.setLocal("wxToken", token);
-    };
-    WxMgr.delWXToken = function() {
-      var self = this;
-      self.saveWXToken("");
+    WxMgr.getWeixinAuth = function(callback) {
+      callBackHandler[Tag_WeiXinToken] = callback;
+      cc.sys.os == cc.sys.OS_ANDROID ? jsb.reflection.callStaticMethod(ANDROID_CLASS_NAME, "getWeixinAuth", "()V") : cc.sys.os == cc.sys.OS_IOS;
     };
     module.exports = WxMgr;
     cc._RF.pop();
-  }, {
-    DeviceApi: "DeviceApi"
-  } ],
+  }, {} ],
   md5: [ function(require, module, exports) {
     (function(process, global) {
       "use strict";
@@ -2169,4 +2223,4 @@ window.__require = function e(t, n, r) {
   }, {
     _process: 1
   } ]
-}, {}, [ "InitGame", "EventType", "GameConfig", "MsgConfig", "GameMode", "HotUpdate", "NetTcp", "AudioMgr", "Debug", "DeviceApi", "EventMgr", "KeyBackExit", "StrTools", "UtilTools", "WxMgr", "md5", "LoadingTips", "NoticeTips", "Toast", "LoadingScene", "LoginScene", "LogoScene" ]);
+}, {}, [ "InitGame", "EventType", "GameConfig", "MsgConfig", "GameMode", "HotUpdate", "NetHttp", "NetTcp", "AudioMgr", "Debug", "DeviceApi", "EventMgr", "KeyBackExit", "StrTools", "UtilTools", "WxMgr", "md5", "LoadingTips", "NoticeTips", "Toast", "LoadingScene", "LoginScene", "LogoScene" ]);

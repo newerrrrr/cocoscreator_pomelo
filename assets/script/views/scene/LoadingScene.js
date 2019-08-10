@@ -38,7 +38,7 @@ cc.Class({
     },
 
     start () {
-        cc.log('-----------------loading...');
+        cc.log('[loadingScene]: -----------------loading...');
 
         require('InitGame');
         

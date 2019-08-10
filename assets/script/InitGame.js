@@ -3,6 +3,8 @@
 
 (function() { 
     window.gt = {} 
+    gt.playerData = {};
+
     //注: require()不需要带路径,或者带相对路径 
     require('./config/GameConfig').init(gt); 
     require('./config/MsgConfig').init(gt);
@@ -11,10 +13,13 @@
     
     gt.EventType = require('./config/EventType');
     gt.tcp       = require('./public/net/NetTcp');
+    gt.http      = require('./public/net/NetHttp');
     gt.deviceApi = require('./public/utils/DeviceApi'); 
     gt.wxMgr     = require('./public/utils/WxMgr'); 
     gt.audio     = require('./public/utils/AudioMgr');
     gt.gameMode  = require('./public/GameMode');
 
-    gt.playerData = {};
+    gt.ui = {} 
+    gt.ui.toast      = require('./views/msgbox/Toast');
+    gt.ui.noticeTips = require('./views/msgbox/NoticeTips');
 })();

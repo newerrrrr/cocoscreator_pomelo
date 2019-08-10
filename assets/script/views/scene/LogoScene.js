@@ -32,37 +32,25 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () { 
+        // var tt = GameTools.getInstance() 
+        // cc.log('--------------tt:', tt)
     }, 
 
-    start () {
-        cc.log('---------------start logo');
-        // pomelo.init({
-        //     host : "192.168.159.128",
-        //     port : 3014,
-        // }, function () {
-        //     var route = 'gate.gateHandler.queryEntry';
-        //     pomelo.request(route, {
-        //         username:"huanglibo",
-        //         rid:1234,
-        //     }, function (data) {
-        //         console.log("data======================");
-        //         // pomelo.disconnect(function () {
-        //         //     pomelo.init({
-        //         //         host : host2,
-        //         //         host : host2,
-        //         //         port : port2,
-        //         //         reconnect : true
-        //         //     }, function () {
-        //         //     })
-        //         // });
-        //     })
-            
-        // });
+    onDestroy() {
+    },
 
-
+    start () { 
         //进入自动更新界面
-        this.node.runAction(cc.sequence(cc.delayTime(0.5), cc.fadeOut(0.8), cc.callFunc(function(){
-            cc.director.loadScene('LoadingScene'); 
+        this.node.runAction(cc.sequence(cc.delayTime(0.3), cc.fadeOut(0.5), cc.callFunc(function(){ 
+            //如果未开启热更或者热更后重启则直接进入游戏 
+            if (!jsb || !gt.open_hotupdate || cc.sys.localStorage.getItem('RestartAfterHotUpdate') == 'true') {
+                cc.log('[LogoScene] :  skip hotUpdate ------->')
+                cc.sys.localStorage.setItem('RestartAfterHotUpdate', 'false'); 
+                cc.director.loadScene('LoadingScene');
+            }
+            else {
+                cc.director.loadScene('HotUpdate'); 
+            } 
         })));
     }
 

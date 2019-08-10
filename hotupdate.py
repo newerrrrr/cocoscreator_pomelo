@@ -79,31 +79,49 @@ def zip_files(zipPaths, bDeleteAfterZip):
 					get_zip_file(tmpInput, result) 
 				else: 
 					result.append(tmpInput)
-			
+	
+	#备份当前路径
+	preCwd = os.getcwd()
+	
 	#开始压缩
 	for src in zipPaths:
-		#输出路径名
-		outputPath = ''
-		if os.path.isdir(src):
-			outputPath = src + '.zip'
-		else:
-			info = os.path.splitext(src)
-			outputPath = info[0] + '.zip'
-		
 		#去掉目录最后的斜杠
 		while src[-1] == '/':
 			src = src[:-1]
+			
+		tmpdir = os.path.split(src)
+		
+		print('===========tmpdir:' + tmpdir[0])
+		print('===========tmpdd:' + tmpdir[1])
+		
+		dirpath = tmpdir[0]
+		filename = tmpdir[1] 
+		os.chdir(dirpath) #以目标的上一级目录为工作目录去生成压缩包
+		
+		inputpath = ''
+		outputPath = ''
+		if os.path.isdir(src):
+			inputpath = src
+			outputPath = filename + '.zip' #zip名字为最后一级目录名.zip 
+		else:
+			info = os.path.splitext(filename) #zip名字为文件名.zip 
+			inputpath = filename
+			outputPath = info[0] + '.zip'
+		
 		
 		#输入路径
 		filelist = []
-		get_zip_file(src, filelist)
+		get_zip_file(inputpath, filelist)
 		
 		#开始压缩
-		print('outputPath:' + outputPath)
+		print('outputPath: ' + outputPath)
 		f = zipfile.ZipFile(outputPath, 'w', zipfile.ZIP_DEFLATED)
 		for file in filelist:
 			f.write(file)
 		f.close()
+
+		#恢复原工作路径 
+		os.chdir(preCwd) 
 		
 		#删除相应的目录、文件
 		if bDeleteAfterZip:
@@ -112,9 +130,8 @@ def zip_files(zipPaths, bDeleteAfterZip):
 			else:
 				os.remove(src)
 	
-	#恢复原工作路径 
-	os.chdir(ROOT_DIR) 
-	
+
+
 
 def main():
     #修改版本号

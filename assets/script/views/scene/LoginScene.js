@@ -25,38 +25,18 @@ cc.Class({
     onLoad () {
         //过渡效果
         this.node.opacity = 0;
-        this.node.runAction(cc.fadeIn(0.7));
+        this.node.runAction(cc.fadeIn(0.5));
 
-        // require('InitGame');
         gt.autoAdaptDevices(); 
-
-        // cc.loader.loadRes('prefab/NoticeTips', function(err, prefab) {
-
-        //    var newNode = cc.instantiate(prefab);
-        //     cc.director.getScene().addChild(newNode);            
-        // }); 
-
-        // var testFunc = function(arg1, arg2) {
-        //     cc.log('------arg1, arg2', arg1, arg2) 
-        // }
-        // gt.addEventHandler('HLBTEST', this, testFunc.bind(this)) 
-        // gt.addEventHandler('HLBTEST2', this, testFunc.bind(this))   
+        this.addComponent('KeyBackExit'); //按返回键退出游戏
     },
 
     start () { 
-        cc.log('----------LoginScene start')
-        // require('NoticeTips').show("dfdfdfd", 
-        //     null, null, true, {
-        //     imgOkPath:"texture/common/btn_blue",
-        //     strOk:'dfdf'
-        // }); 
-        
-        // gt.removeAllEventHandler(this)
-        // gt.showLoadingTips("dfdfdfd", 5000, 3000);  
-        // gt.dispatchEvent('HLBTEST', 111, 222) 
-        // gt.dispatchEvent('HLBTEST2', 111, 222) 
+        cc.log('=== LoginScene')
+        //检查正式版是否自动微信登陆
+        this.autoLogin = this.checkAutoLogin();
+  
 
-        // gt.audio.playMusic('common/bgm', true)         
     },
 
 
@@ -64,57 +44,110 @@ cc.Class({
 
     onBtnLoginWX:function(){
         cc.log("===== onBtnLoginWX");
-        gt.audio.playEffect("common/btn_click", false);
+  
+        //提示安装微信客户端
+        if (!gt.wxMgr.isWXAppInstalled()) {
+            gt.ui.toast.show('您还没有安装微信哦！');
+            return 
+        }
 
+        //3.获取微信个人昵称, 性别, 头像url等内容
+        var getWeixinUserInfo = function(accessToken, refreshToken, openid) {
+            let url = 'https://api.weixin.qq.com/sns/userinfo?access_token='+accessToken+'&openid='+openid;
+            gt.http.getData(url, function(result, resp) {
+                if (!result) return;
+                cc.log('---------------user info resp: ', resp) 
+                resp = JSON.parse(resp);
+                if (resp.errcode) {
+                    gt.ui.noticeTips.show('您的微信授权信息已失效, 请重新登录！', null, null, true); 
+                    return 
+                } 
+
+                //4.开始登陆
+                this.startLogin('weixin', resp.openid, resp.nickname, resp.headimgurl, resp.sex, accessToken, refreshToken);
+            }.bind(this));            
+        }
+
+        //2.获取 token 
+        var getWeixinToken = function(authCode) {
+            let url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='+gt.wxAppId+'&secret='+gt.wxSecret+'&code='+authCode+'&grant_type=authorization_code';
+            gt.http.getData(url, function(result, resp) {
+                if (!result) return;
+                cc.log('---------------token resp: ', resp) 
+                resp = JSON.parse(resp);
+                if (resp.errcode) {//申请失败 
+                    return 
+                } 
+                getWeixinUserInfo(resp.access_token, resp.refresh_token, resp.openid);
+            }.bind(this));
+        }
+
+        //1.先获取授权 
+        gt.wxMgr.getWeixinAuth(function(respJson) {
+          cc.log('weixin auth resp: ', respJson);
+            gt.removeLoadingTips();
+
+            if (typeof(respJson) == 'string' && respJson !== '') {
+                respJson = JSON.parse(respJson);
+            }
+
+            if (respJson.status === 'SUCCESS') {
+                getWeixinToken(respJson.code) 
+            }
+            else if (respJson.status === 'CANCEL') { //用户取消授权
+                cc.log("---- weixin auth cancel")
+            }
+            else {
+                cc.log("---- weixin auth fail") 
+                gt.ui.noticeTips.show('微信授权失败', null, null, true);  
+            } 
+        }.bind(this));
     },
 
     onBtnLoginTel:function(){
         cc.log("===== onBtnLoginTel");
-        gt.tcp.connect({
-            host : gt.gateServer.ip,
-            port : gt.gateServer.port,
-        }, function(result) {
-            cc.log('---------connect result:', result);
-        });
 
+
+        gt.deviceApi.gotoOpenGps();
     },
 
     onBtnLoginGuest:function(){ 
-        pomelo.init({
+        gt.tcp.connect({
             host : gt.gateServer.ip,
             port : gt.gateServer.port,
-        }, function (code) {
-            if (code == 'timeout') {
-                cc.log('-------connect timeout !')
-                pomelo.disconnect(function() {
-                    cc.log("============ disconnect success")
-                })
-                return;
-            }
-            var route = 'gate.gateHandler.queryEntry';
-            pomelo.request(route, {
-                username:"huanglibo",
-                uid:1234,
-            }, function (data) {
-
-                console.log("data======================", data.host, data.port);
-                if ('undefined' != data || null != data) {
-                    pomelo.disconnect(function () {
-                        pomelo.init({
-                            host : data.host,
-                            port : data.port,
-                            reconnect : true
-                        }, function () {                            
-                            var route = 'login.loginHandler.login';
-                            pomelo.request(route, {}, function(para) {
-                                console.log("para======================", para.msg);
-                            });
-                        });
-                    });                    
-                }
-            })  
+        }, 
+        function(result) { 
+            cc.log('---------connect result:', result);
         });
+
+        this.startLogin('guest', )
     },
 
+    checkAutoLogin:function() { 
+        //获取存档 上次获取到的 token 时间 
+        let accessTokenTime = gt.getLocal('WX_Access_Token_Time', ''); 
+        let refreshTokenTime = gt.getLocal('WX_Refresh_Token_Time', ''); 
+        if (accessToken === '' || refreshToken === '') { //未记录表示第一次登陆 
+            return false; 
+        } 
 
+        //检测是否超时
+        let accessTokenReconnectTime  = 5400    //3600*1.5   微信accesstoken默认有效时间为2小时,这里取1.5小时内登录不需要重新取 accesstoken
+        let refreshTokenReconnectTime = 2160000 //3600*24*25 微信refreshtoken默认有效时间为30天,这里取25天内登录不需要重新取 refreshtoken
+        
+        
+    }, 
+
+    /* loginType: 登陆方式: weixin, guest, tel 
+     * icon：头像url 
+     * sex：性别 1：男 2：女 
+     * accessToken, refreshToken：微信相关token 
+     */
+    startLogin:function(loginType, openId, nick, icon, sex, accessToken, refreshToken) {
+        cc.log('=== startLogin: ', loginType, openId, nick, icon, sex, accessToken, refreshToken); 
+    },
+
+    onRcvLogin:function(msgTbl) { 
+        cc.log('=== onRcvLogin:');
+    },
 });

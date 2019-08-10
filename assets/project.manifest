@@ -1,0 +1,101 @@
+{
+	"version" : "1.0.0.0",
+	"packageUrl" : "http://192.168.3.253:8080/v1.0.0.1/",
+
+	"assets" : {
+		"res/import.zip" : {
+			"md5" : "7a43dde07fdb8cddf70375872a8c5b85",
+			"compressed" : "true"
+		},
+		"res/raw-assets/05/05143c04-be8e-4ba1-84c0-4cf4275ad739.png" : {
+			"md5" : "22efb1a5cdb9777a1720d091209fd35f"
+		},
+		"res/raw-assets/0d/0d8831ed-2bf4-4e15-a3da-4d03fc5a4787.manifest" : {
+			"md5" : "77fcdb33a49097b7c55a64e4f6a19d72"
+		},
+		"res/raw-assets/19/19f9d6d0-9913-4e44-a289-a00ea6bb7252.png" : {
+			"md5" : "7bd2ec51f629bbeef14e45731e85b846"
+		},
+		"res/raw-assets/1f/1f29f8ef-ab3c-4119-8fe2-fb531a572f6c.png" : {
+			"md5" : "5092b1026789145e958644073ba89cd9"
+		},
+		"res/raw-assets/28/28dff415-7aec-4ce1-8dc7-c8d8a8e5827e.png" : {
+			"md5" : "6932eb63d435147fc9412bbdef464fe2"
+		},
+		"res/raw-assets/33/33e80a0a-6d29-4d9e-961a-c2b732cbced0.png" : {
+			"md5" : "085aaf0e1830e93a6dc22c39441e2d51"
+		},
+		"res/raw-assets/3b/3b136bd1-403a-4a2b-b4e6-782ae72cf88d.png" : {
+			"md5" : "5593534c8e9c679bab0bfbe19c38bf99"
+		},
+		"res/raw-assets/3d/3d71683c-91ca-4057-83ba-28d54bdd77d3/FZHTJW.ttf" : {
+			"md5" : "c987701aee766d92d763d30b3e7b399d"
+		},
+		"res/raw-assets/43/43ea912e-62b3-419a-8f06-2d97d669741c.png" : {
+			"md5" : "3330ef63359a19b5af043e754f9afadc"
+		},
+		"res/raw-assets/53/53d308e3-0e7e-49a7-8b67-fbf3a62f990d.png" : {
+			"md5" : "0690d61cff1c5cedce0d4eb1d6b31b8a"
+		},
+		"res/raw-assets/56/56f53549-6087-4a78-8cc1-d7bb539dbcea.png" : {
+			"md5" : "fc3e3b1be593ab8c0f771b3fdab19620"
+		},
+		"res/raw-assets/57/570d03d7-22d4-4c1a-a4eb-29c18e7eb745.png" : {
+			"md5" : "90b55a1283d6fa59df640865ac7a490f"
+		},
+		"res/raw-assets/5e/5e2afbe1-2da7-4efb-a0a8-2f2e467e1a65.png" : {
+			"md5" : "475a55d81a8f4de86e9a70accbfb9965"
+		},
+		"res/raw-assets/69/6915c086-5f0d-4359-a23a-cce9447f0122.png" : {
+			"md5" : "58d7c6654be4da7d4c4e1850728bad8e"
+		},
+		"res/raw-assets/79/792d60bb-701f-463e-82d6-37315a2e99ec.png" : {
+			"md5" : "d0281070d9dbddb88ee7a9d2711bd02d"
+		},
+		"res/raw-assets/80/804d148b-1ebf-4854-b9d3-ecc13db8e93e.png" : {
+			"md5" : "8ec071b2f43c89ab7c936334ab78456a"
+		},
+		"res/raw-assets/90/90e40c4d-822d-4c9f-98b5-a12bcc5dab27.png" : {
+			"md5" : "8692f3c7d1219aaad8dd8e1e88bf2997"
+		},
+		"res/raw-assets/ab/abc1970a-e976-4a0b-9842-54ed8166e45e.png" : {
+			"md5" : "cc4b5d52b4a16f85507990a14a804bee"
+		},
+		"res/raw-assets/b9/b939b19f-9d1c-43d6-bc54-fad74ab775b0.manifest" : {
+			"md5" : "bedf34f6f8384746f341d9d9ad2adc94"
+		},
+		"res/raw-assets/c1/c1cdb30b-bd2d-4b00-8aea-3ea3c88a555e.png" : {
+			"md5" : "38fddbfa70c8d1f81e41201548906ca1"
+		},
+		"res/raw-assets/d3/d3692764-c4c8-467f-8271-b3203c7012a4.png" : {
+			"md5" : "961f056338241a15439782c8e6a23230"
+		},
+		"res/raw-assets/dc/dc58cb6d-90ef-4cec-945c-a421964c81b9.mp3" : {
+			"md5" : "1c8b3841e09685774231891574d0b281"
+		},
+		"res/raw-assets/f3/f3adf025-99a8-49a2-9f40-61830edaa670.mp3" : {
+			"md5" : "89539045cca2a21699118a9441c4b7b0"
+		},
+		"res/raw-assets/f4/f4d96a91-b376-4a4c-bbca-39cd27ea34c3.png" : {
+			"md5" : "93293332bfdbae586c1dcd247eaa2ed2"
+		},
+		"res/raw-assets/f9/f9cf4887-ba73-42f6-8738-a0b922a4f3b7.png" : {
+			"md5" : "ef0f630a9a3dcc2de38e853ee89f7314"
+		},
+		"src/cocos2d-jsb.zip" : {
+			"md5" : "ea8ee335a77c0df794004042ceaebd47",
+			"compressed" : "true"
+		},
+		"src/project.dev.js" : {
+			"md5" : "3a59c5c8993f36da41ca5832d60cad04"
+		},
+		"src/settings.js" : {
+			"md5" : "b8d5a53a6de76cb85f2c687c2ea4da6e"
+		},
+		"src/assets/script/public/net/pomelo-creator-client.js" : {
+			"md5" : "0c5343b7a4e82574058d54062f9ef7d1"
+		}
+	},
+	"searchPaths" : [
+	]
+}
