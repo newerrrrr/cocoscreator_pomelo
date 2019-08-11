@@ -107,8 +107,9 @@ cc.Class({
     onBtnLoginTel:function(){
         cc.log("===== onBtnLoginTel");
 
-
-        gt.deviceApi.gotoOpenGps();
+        var tbl = {msg:'aa', code:'ttt'}
+        console.table(tbl)
+        
     },
 
     onBtnLoginGuest:function(){ 
@@ -127,7 +128,7 @@ cc.Class({
         //获取存档 上次获取到的 token 时间 
         let accessTokenTime = gt.getLocal('WX_Access_Token_Time', ''); 
         let refreshTokenTime = gt.getLocal('WX_Refresh_Token_Time', ''); 
-        if (accessToken === '' || refreshToken === '') { //未记录表示第一次登陆 
+        if (accessTokenTime === '' || refreshTokenTime === '') { //未记录表示第一次登陆 
             return false; 
         } 
 

@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.5990752083575676,
-      "y": 0.5990752083575676,
+      "x": 0.36856730432277535,
+      "y": 0.36856730432277535,
       "z": 1
     },
     "_quat": {
@@ -720,8 +720,8 @@
     "target": {
       "__id__": 2
     },
-    "component": "LoginScene",
-    "_componentId": "",
+    "component": "",
+    "_componentId": "10622vpCXRIOpdjNT+kFHai",
     "handler": "onBtnLoginTel",
     "customEventData": ""
   },
@@ -895,8 +895,8 @@
     "target": {
       "__id__": 2
     },
-    "component": "LoginScene",
-    "_componentId": "",
+    "component": "",
+    "_componentId": "10622vpCXRIOpdjNT+kFHai",
     "handler": "onBtnLoginGuest",
     "customEventData": ""
   },
@@ -1132,10 +1132,8 @@
     "_fontSize": 28,
     "_lineHeight": 40,
     "_enableWrapText": false,
-    "_N$file": {
-      "__uuid__": "3d71683c-91ca-4057-83ba-28d54bdd77d3"
-    },
-    "_isSystemFontUsed": false,
+    "_N$file": null,
+    "_isSystemFontUsed": true,
     "_spacingX": 0,
     "_batchAsBitmap": false,
     "_N$horizontalAlign": 1,
@@ -1219,10 +1217,8 @@
     "_fontSize": 28,
     "_lineHeight": 60,
     "_enableWrapText": false,
-    "_N$file": {
-      "__uuid__": "3d71683c-91ca-4057-83ba-28d54bdd77d3"
-    },
-    "_isSystemFontUsed": false,
+    "_N$file": null,
+    "_isSystemFontUsed": true,
     "_spacingX": 0,
     "_batchAsBitmap": false,
     "_N$horizontalAlign": 1,
