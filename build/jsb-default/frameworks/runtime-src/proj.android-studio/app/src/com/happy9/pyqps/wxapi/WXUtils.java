@@ -4,12 +4,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import org.cocos2dx.javascript.AppActivity;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.happy9.pyqps.R;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import java.io.ByteArrayOutputStream;
@@ -19,7 +23,7 @@ import java.io.File;
 public class WXUtils {
     private static AppActivity app = null;
     private static IWXAPI api = null;
-
+    
     //在 AppActivity.java 中调用初始化并注册微信
     public static void init(AppActivity context) {
         Log.d(Constant.LOG_TAG,"==== WXUtils init");
@@ -59,12 +63,12 @@ public class WXUtils {
     }
 
     //分享图片
-    public static void shareImage(final String weixinId, final String shareTo, final String filePath) {
+    //shareTo ：timeline（朋友圈）
+    public static void shareImage(final String shareTo, final String filePath) {
         app.runOnGLThread(new Runnable() {
             @Override
             public void run() {
-
-                int THUMB_SIZE = 140; //缩略图大小
+                Log.d(Constant.LOG_TAG, "shareImage:"+ shareTo + ", " + filePath);
 
                 try {
                     Bitmap bmp = null;
@@ -79,9 +83,6 @@ public class WXUtils {
                         Log.e(Constant.LOG_TAG, " share image not exist", e);
                         return;
                     }
-                    //获取实例
-                    IWXAPI api = WXAPIFactory.createWXAPI(app, weixinId, false);
-                    api.registerApp(weixinId);
 
                     //初始化 WXImageObject 和 WXMediaMessage 对象
                     WXImageObject imgObj = new WXImageObject(bmp);
@@ -89,6 +90,7 @@ public class WXUtils {
                     msg.mediaObject = imgObj;
 
                     //设置缩略图
+                    int THUMB_SIZE = 140; //缩略图大小
                     int w = bmp.getWidth() * THUMB_SIZE / bmp.getHeight();
                     Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, w, THUMB_SIZE, true);
                     msg.thumbData = bmpToByteArray(thumbBmp, true);
@@ -98,6 +100,7 @@ public class WXUtils {
                     SendMessageToWX.Req req = new SendMessageToWX.Req();
                     req.transaction = shareTo + String.valueOf(System.currentTimeMillis()); //标识一个唯一请求
                     req.message = msg;
+
                     if (shareTo.equals("timeline")) { //分享到朋友圈
                         req.scene = SendMessageToWX.Req.WXSceneTimeline;
                     }
@@ -109,21 +112,15 @@ public class WXUtils {
                 catch (Exception e) {
                     Log.e(Constant.LOG_TAG, "WeixinImageMessage->", e);
                 }
-
             }
         });
     }
 
     //分享APP url
-    public void shareAppInfo(final String weixinId, final String shareTo, final String title, final String message, final String url) {
+    public static void shareAppInfo(final String shareTo, final String title, final String message, final String url) {
         app.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-                //获取实例
-                IWXAPI api = WXAPIFactory.createWXAPI(app, weixinId, false);
-                api.registerApp(weixinId);
-
                 WXWebpageObject webpage = new WXWebpageObject();
                 webpage.webpageUrl = url;
                 WXMediaMessage msg = new WXMediaMessage(webpage);
@@ -143,6 +140,31 @@ public class WXUtils {
                     req.scene = SendMessageToWX.Req.WXSceneSession;
                 }
                 api.sendReq(req);
+            }
+        });
+    }
+
+    //微信支付
+    public static void weixinPay(final String orderInfo) {
+        app.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject data = new JSONObject(orderInfo);
+                    PayReq req = new PayReq();
+                    req.appId = data.getString("appid");
+                    req.partnerId = data.getString("partnerid");
+                    req.prepayId = data.getString("prepayid");
+                    req.packageValue = data.getString("package");
+                    req.nonceStr = data.getString("noncestr");
+                    req.timeStamp = data.getString("timestamp");
+                    req.sign = data.getString("sign");
+                    api.sendReq(req);
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e(Constant.LOG_TAG, e.toString(), e);
+                }
             }
         });
     }

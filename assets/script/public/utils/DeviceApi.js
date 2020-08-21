@@ -71,6 +71,7 @@ DeviceApi.getUUID = function(){
     return uuid; 
 };
 
+//获取分享码
 DeviceApi.getShareCode = function(){ 
     let shareCode = "";
     if (cc.sys.os == cc.sys.OS_ANDROID) {

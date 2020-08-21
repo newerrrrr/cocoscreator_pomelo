@@ -669,6 +669,7 @@ gt.isEmptyObject = function(obj) {
     return true;
 }
 
+//克隆对象
 var cloneObj = function (obj) { 
     var newObj = {}; 
     if (obj instanceof Array) { 
@@ -681,6 +682,21 @@ var cloneObj = function (obj) {
     return newObj; 
 };
 gt.cloneObj = cloneObj;
+
+//对象包含的成员个数
+var sizeObj = function(obj) {
+    if(!obj) {
+        return 0;
+    }
+    var size = 0;
+    for(var f in obj) {
+        if(obj.hasOwnProperty(f)) {
+            size++;
+        }
+    }
+    return size;
+};
+gt.sizeObj = sizeObj;
 
 //判断obj是否为json对象
 gt.isJson = function(obj) {

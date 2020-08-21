@@ -29,7 +29,7 @@
     "portrait": false,
     "upsideDown": false
   },
-  "packageName": "org.cocos2d.HLBJS",
+  "packageName": "com.happy9.pyqps",
   "qqplay": {
     "REMOTE_SERVER_ROOT": "",
     "orientation": "portrait"

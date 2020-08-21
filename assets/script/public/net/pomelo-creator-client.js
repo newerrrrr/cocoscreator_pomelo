@@ -1144,6 +1144,9 @@
 
 })('undefined' !== typeof protobuf ? protobuf : module.exports, this);
 
+
+
+//----------------------------------------- socket -----------------------------------------//
 cc.Pomelo = function() {
   var JS_WS_CLIENT_TYPE = 'js-websocket';
   var JS_WS_CLIENT_VERSION = '0.0.1';
@@ -1163,8 +1166,8 @@ cc.Pomelo = function() {
     window.localStorage = sys.localStorage;
   }
   
-  var RES_OK = 200;
-  var RES_FAIL = 500;
+  var RES_OK         = 200;
+  var RES_FAIL       = 500;
   var RES_OLD_CLIENT = 501;
 
   if (typeof Object.create !== 'function') {
@@ -1192,7 +1195,7 @@ cc.Pomelo = function() {
   var clientProtos = {};
   var protoVersion = 0;
 
-  var heartbeatInterval    = 0;
+  var heartbeatInterval    = 0; //该参数在服务器端app.js里配置,由服务器下发
   var heartbeatTimeout     = 0;
   var nextHeartbeatTimeout = 0;
   var gapThreshold         = 100;   // heartbeat gap threashold
@@ -1224,6 +1227,23 @@ cc.Pomelo = function() {
 
   var initCallback = null;
 
+
+  /*
+    params = {
+      host: , 
+      port: , 
+      encode: func, //对消息进行编码
+      decode: func, //对消息进行解码 
+      encrypt: true/false, //是否加解密
+      handshakeCallback:func, //握手回调
+      maxReconnectAttempts:3, //重连次数
+      reconnect:true/false, //是否支持断开重连尝试
+
+      user:{
+        
+      }
+    }
+  */
   pomelo.init = function(params, cb) {
     initCallback = cb;
     var host = params.host;
@@ -1274,10 +1294,12 @@ cc.Pomelo = function() {
     //compress message by protobuf
     if(protobuf && clientProtos[route]) {
       msg = protobuf.encode(route, msg);
-    } else if(decodeIO_encoder && decodeIO_encoder.lookup(route)) {
+    } 
+    else if(decodeIO_encoder && decodeIO_encoder.lookup(route)) {
       var Builder = decodeIO_encoder.build(route);
       msg = new Builder(msg).encodeNB();
-    } else {
+    } 
+    else {
       msg = Protocol.strencode(JSON.stringify(msg));
     }
 
@@ -1324,6 +1346,7 @@ cc.Pomelo = function() {
         pomelo.emit('reconnect');
       }
       reset();
+
       var obj = Package.encode(Package.TYPE_HANDSHAKE, Protocol.strencode(JSON.stringify(handshakeBuffer)));
       send(obj);
     };
@@ -1345,7 +1368,8 @@ cc.Pomelo = function() {
       console.log(event)
       pomelo.emit('close', event);
       pomelo.emit('disconnect', event);
-      console.error('socket close: ', event);
+      console.log('[onclose]: socket close: ', event);
+      console.log('params =' + JSON.stringify(params)) 
       if(!!params.reconnect && reconnectAttempts < maxReconnectAttempts) {
         reconnect = true;
         reconnectAttempts++;
@@ -1446,9 +1470,10 @@ cc.Pomelo = function() {
     }
   };
 
-  var handler = {};
+  // var handler = {};
 
-  var heartbeat = function(data) {
+  var heartbeat = function(data) { 
+    console.log("======heartbeat") 
     if(!heartbeatInterval) {
       // no heartbeat
       return;
@@ -1584,11 +1609,14 @@ cc.Pomelo = function() {
     return msg;
   };
 
-  var handshakeInit = function(data) {
+  var handshakeInit = function(data) { 
+    console.log('====================handshakeInit:' + JSON.stringify(data));
+    //sys.heartbeat在服务器 app.js 中配置
     if(data.sys && data.sys.heartbeat) {
       heartbeatInterval = data.sys.heartbeat * 1000;   // heartbeat interval
       heartbeatTimeout = heartbeatInterval * 2;        // max heartbeat timeout
-    } else {
+    } 
+    else {
       heartbeatInterval = 0;
       heartbeatTimeout = 0;
     }

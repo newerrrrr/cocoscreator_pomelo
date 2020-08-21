@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.36856730432277535,
-      "y": 0.36856730432277535,
+      "x": 0.29353837495234264,
+      "y": 0.29353837495234264,
       "z": 1
     },
     "_quat": {
@@ -1129,7 +1129,7 @@
     "_useOriginalSize": true,
     "_string": "",
     "_N$string": "",
-    "_fontSize": 28,
+    "_fontSize": 32,
     "_lineHeight": 40,
     "_enableWrapText": false,
     "_N$file": null,
@@ -1249,7 +1249,7 @@
     "_N$returnType": 0,
     "_N$inputFlag": 5,
     "_N$inputMode": 6,
-    "_N$fontSize": 28,
+    "_N$fontSize": 32,
     "_N$lineHeight": 40,
     "_N$fontColor": {
       "__type__": "cc.Color",
@@ -1339,10 +1339,18 @@
       "__id__": 2
     },
     "_enabled": true,
-    "btnWX": null,
-    "btnTel": null,
-    "btnGuest": null,
-    "editbox": null,
+    "btnWX": {
+      "__id__": 10
+    },
+    "btnTel": {
+      "__id__": 14
+    },
+    "btnGuest": {
+      "__id__": 18
+    },
+    "editbox": {
+      "__id__": 27
+    },
     "_id": "a5VcOqiKhKXKKLhlf3IYD0"
   }
 ]

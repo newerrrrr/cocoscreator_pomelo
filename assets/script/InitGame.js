@@ -11,8 +11,9 @@
     require('./public/utils/UtilTools').init(gt);
     require('./public/utils/Debug').init(gt);
     
+    var NetTcp = require('./public/net/NetTcp'); 
+    gt.tcp       = new NetTcp();
     gt.EventType = require('./config/EventType');
-    gt.tcp       = require('./public/net/NetTcp');
     gt.http      = require('./public/net/NetHttp');
     gt.deviceApi = require('./public/utils/DeviceApi'); 
     gt.wxMgr     = require('./public/utils/WxMgr'); 
